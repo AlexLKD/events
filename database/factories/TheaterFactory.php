@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Theater;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TheaterFactory extends Factory
 {
+    protected $model = Theater::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +19,8 @@ class TheaterFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->company,
+            'city_id' => \App\Models\City::factory()->create()->id,
         ];
     }
 }

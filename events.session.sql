@@ -1,1 +1,1 @@
-SELECT * from movies
+SELECT * from directors
