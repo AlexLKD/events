@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
+use Inertia\Inertia;
 
 class EventController extends Controller
 {
@@ -13,9 +14,12 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::where('available_seats', '>', 150)->get();
+        // $events = Event::all();
+        return Inertia::render('Events/Index', ['events' => $events]);
     }
-
+    
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -35,9 +39,9 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show()
     {
-        //
+        //  
     }
 
     /**
