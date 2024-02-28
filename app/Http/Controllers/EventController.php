@@ -14,8 +14,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::where('available_seats', '>', 150)->get();
-        // $events = Event::all();
+        // $events = Event::with('movie')->where('available_seats', '>', 150)->get();
+        $events = Event::with('movie')->get();
         return Inertia::render('Events/Index', ['events' => $events]);
     }
     
@@ -39,9 +39,10 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        //  
+        $event = Event::with('movie')->findOrFail($id);
+        return Inertia::render('Events/ShowEvent', ['event' => $event]);
     }
 
     /**

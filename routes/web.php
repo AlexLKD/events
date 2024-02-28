@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
     Route::get('/events', [EventController::class, 'index'])->name('events.index');
+    
 });
 
 

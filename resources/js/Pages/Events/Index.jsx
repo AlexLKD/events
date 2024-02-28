@@ -2,23 +2,23 @@ import React, { Fragment } from 'react';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import Card from '@/Components/Card'
 
 export default function Index ({ events, auth }) {
-
     return (
             <AuthenticatedLayout
                 user={auth.user}
-                header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Events</h2>}
+                header={<h2 className="font-semibold text-xl text-gray-800 leading-tight text-center">All Events</h2>}
             >
             <div>
-                <h1>Events with more than 150 available seats</h1>
-                <ul>
-                    {events.map((event, index) => (
-                        <li key={index}>{event.id}
-                                , {event.available_seats}
-                        </li>
+                <div className="grid grid-cols-3 gap-4">
+                    {events.map((event) => (
+                        <Card
+                        key = {event.id}
+                        event = {event}
+                        />
                     ))}
-                </ul>
+                </div>
             </div>
             
             </AuthenticatedLayout>
