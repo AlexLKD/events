@@ -39,9 +39,9 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($event)
     {
-        $event = Event::with('movie')->findOrFail($id);
+        $event = Event::with('movie')->findOrFail($event);
         return Inertia::render('Events/ShowEvent', ['event' => $event]);
     }
 

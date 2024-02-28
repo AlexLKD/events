@@ -20,7 +20,6 @@ export default function Index ({ events, auth }) {
                     ))}
                 </div>
             </div>
-            
             </AuthenticatedLayout>
     );
 };
