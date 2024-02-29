@@ -33,7 +33,18 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'availableSeats' => 'required|integer',
+            'screenedAt' => 'required|date',
+            'theaterId' => 'required|exists:theaters,id',
+            'movieId' => 'required|exists:movies,id'
+        ]);
+
+        // Créer l'événement avec les données validées
+        Event::create($validatedData);
+
+        // Redirection après la création
+        return redirect()->route('dashboard')->with('success', 'Event created successfully');
     }
 
     /**
