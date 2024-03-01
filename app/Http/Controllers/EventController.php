@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
+use App\Models\Movie;
+use App\Models\Theater;
 use Inertia\Inertia;
 
 class EventController extends Controller
@@ -14,8 +16,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        // $events = Event::with('movie')->where('available_seats', '>', 150)->get();
-        $events = Event::with('movie')->get();
+        $events = Event::with('movie')->with('theater')->with('city')->get();
         return Inertia::render('Events/Index', ['events' => $events]);
     }
     
@@ -25,7 +26,9 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        $theaters = Theater::all();
+        $movies = Movie::all();
+        return inertia('Dashboard', compact('theaters', 'movies'));
     }
 
     /**
@@ -33,18 +36,18 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
+        // Valider les données du formulaire
         $validatedData = $request->validate([
-            'availableSeats' => 'required|integer',
-            'screenedAt' => 'required|date',
-            'theaterId' => 'required|exists:theaters,id',
-            'movieId' => 'required|exists:movies,id'
+            'available_seats' => 'required|numeric',
+            'screened_at' => 'required|date',
+            'theater_id' => 'required|exists:theaters,id',
+            'movie_id' => 'required|exists:movies,id',
         ]);
-
-        // Créer l'événement avec les données validées
+    
         Event::create($validatedData);
 
-        // Redirection après la création
-        return redirect()->route('dashboard')->with('success', 'Event created successfully');
+    
+        return redirect()->route('dashboard')->with('success', 'Event created successfully.');
     }
 
     /**

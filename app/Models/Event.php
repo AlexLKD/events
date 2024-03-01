@@ -9,7 +9,17 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'available_seats', 'movie_id'];
+    protected $fillable = [
+        'available_seats',
+        'screened_at',
+        'theater_id',
+        'movie_id',
+    ];
+
+    public function theater()
+    {
+        return $this->belongsTo(Theater::class);
+    }
 
     public function movie()
     {

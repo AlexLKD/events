@@ -1,5 +1,4 @@
 import React from 'react'
-import { InertiaLink } from '@inertiajs/inertia-react';
 import { Head, Link } from '@inertiajs/react';
 
 export default function Card({event}) {

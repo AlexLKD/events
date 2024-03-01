@@ -21,7 +21,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Movies/Create');
     }
 
     /**
@@ -29,7 +29,21 @@ class MovieController extends Controller
      */
     public function store(StoreMovieRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        $imagePath = $request->file('image')->store('movies', 'public');
+    
+        Movie::create([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'image' => $imagePath,
+        ]);
+    
+        return redirect()->route('dashboard')->with('success', 'Movie added successfully!');
     }
 
     /**
