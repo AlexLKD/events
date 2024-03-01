@@ -16,7 +16,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::with('movie')->with('theater')->with('city')->get();
+        $events = Event::with('movie')->with('theater.city')->paginate(9);
         return Inertia::render('Events/Index', ['events' => $events]);
     }
     
@@ -55,7 +55,7 @@ class EventController extends Controller
      */
     public function show($event)
     {
-        $event = Event::with('movie')->findOrFail($event);
+        $event = Event::with('movie')->with('theater.city')->findOrFail($event);
         return Inertia::render('Events/ShowEvent', ['event' => $event]);
     }
 
@@ -81,5 +81,19 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+    public function book(StoreEventRequest $request, $id)
+    {
+    $request->validate([
+        'numberOfSeats' => 'required|integer|min:1',
+    ]);
+
+    $event = Event::findOrFail($id);
+
+    $event->available_seats -= $request->numberOfSeats;
+    $event->save();
+    return redirect()->route('events.show', $event->id)->with('success', 'Seats booked successfully.');
+    // return Inertia::location(route('events.show', $event->id));
     }
 }

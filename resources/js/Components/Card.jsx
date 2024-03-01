@@ -7,6 +7,7 @@ export default function Card({event}) {
                 <h2 className="text-xl font-semibold">{event.movie.title}</h2>
                 <p>{event.movie.description}</p>
                 <p>Available Seats: {event.available_seats}</p>
+                <p>City: {event.theater.city.name}</p>
                 <Link href={route('events.show', event.id)} className="text-blue-400 hover:text-blue-600">View Event</Link>
             </div>
   )

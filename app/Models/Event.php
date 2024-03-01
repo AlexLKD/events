@@ -15,14 +15,19 @@ class Event extends Model
         'theater_id',
         'movie_id',
     ];
+    
+    public function movie()
+    {
+        return $this->belongsTo(Movie::class);
+    }
 
     public function theater()
     {
         return $this->belongsTo(Theater::class);
     }
 
-    public function movie()
+    public function city()
     {
-        return $this->belongsTo(Movie::class);
+        return $this->theater->belongsTo(City::class);
     }
 }

@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
     Route::get('/movies/create', [MovieController::class, 'create'])->name('movies.create');
     Route::post('/movies', [MovieController::class, 'store'])->name('movies.store');
+    Route::post('/events/{id}/book', [EventController::class, 'book'])->name('events.book');
 });
 
 
